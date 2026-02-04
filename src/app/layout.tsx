@@ -7,8 +7,7 @@ import { Providers}  from "@/components/providers";
 
 
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
-import { Sign } from "crypto";
+
 
 const inter = Inter({
   variable: "--font-inter",
