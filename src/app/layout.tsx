@@ -7,6 +7,7 @@ import { Providers}  from "@/components/providers";
 
 
 import "./globals.css";
+import { Toaster } from "sonner";
 
 
 const inter = Inter({
@@ -37,6 +38,7 @@ export default function RootLayout({
       >
         <Providers>
           {children}
+          <Toaster/>
         </Providers>
       </body>
     </html>
