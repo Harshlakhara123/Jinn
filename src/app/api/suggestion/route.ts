@@ -2,7 +2,6 @@ import { generateText } from "ai";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { google } from "@ai-sdk/google";
-import { auth } from "@clerk/nextjs/server";
 
 // Define schema for AI response
 const suggestionSchema = z.object({
@@ -47,14 +46,7 @@ Return only the raw code suggestion or an empty string.
 
 export async function POST(request: Request) {
   try {
-    const { userId } = await auth();
 
-    if(!userId){
-      return NextResponse.json(
-        {error: "Unauthorised"},
-        {status: 403}
-      );
-    }
     const {
       fileName,
       code,

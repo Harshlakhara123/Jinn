@@ -20,7 +20,6 @@ import { fetcher } from "./fetcher";
 
 export const showQuickEditEffect = StateEffect.define<boolean>();
 
-let editorView: EditorView | null = null;
 let currentAbortController: AbortController | null = null;
 
 export const quickEditState = StateField.define<boolean>({
@@ -60,7 +59,7 @@ const createQuickEditTooltip = (state: EditorState): readonly Tooltip[] => {
             pos: selection.to,
             above: false,
             strictSide: false,
-            create() {
+            create(view: EditorView) {
                 const dom = document.createElement("div");
                 dom.className =
                     "bg-popover text-popover-foreground z-50 rounded-sm border border-input p-2 shadow-md flex flex-col gap-2 text-sm";
@@ -84,16 +83,16 @@ const createQuickEditTooltip = (state: EditorState): readonly Tooltip[] => {
                 cancelButton.textContent = "Cancel";
                 cancelButton.className =
                     "font-sans p-1 px-2 text-muted-foreground hover:text-foreground hover:bg-foreground/10 rounded-sm";
-                cancelButton.onclick = () => {
+                cancelButton.onclick = (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
                     if (currentAbortController) {
                         currentAbortController.abort();
                         currentAbortController = null;
                     }
-                    if (editorView) {
-                        editorView.dispatch({
-                            effects: showQuickEditEffect.of(false),
-                        });
-                    }
+                    view.dispatch({
+                        effects: showQuickEditEffect.of(false),
+                    });
                 };
 
                 const submitButton = document.createElement("button");
@@ -104,18 +103,17 @@ const createQuickEditTooltip = (state: EditorState): readonly Tooltip[] => {
 
                 form.onsubmit = async (e) => {
                     e.preventDefault();
-
-                    if (!editorView) return;
+                    e.stopPropagation();
 
                     const instruction = input.value.trim();
                     if (!instruction) return;
 
-                    const selection = editorView.state.selection.main;
-                    const selectedCode = editorView.state.doc.sliceString(
+                    const selection = view.state.selection.main;
+                    const selectedCode = view.state.doc.sliceString(
                         selection.from,
                         selection.to
                     );
-                    const fullCode = editorView.state.doc.toString();
+                    const fullCode = view.state.doc.toString();
 
                     submitButton.disabled = true;
                     submitButton.textContent = "Editing...";
@@ -131,7 +129,7 @@ const createQuickEditTooltip = (state: EditorState): readonly Tooltip[] => {
                     );
 
                     if (editedCode) {
-                        editorView.dispatch({
+                        view.dispatch({
                             changes: {
                                 from: selection.from,
                                 to: selection.to,
@@ -199,13 +197,9 @@ const quickEditKeymap = keymap.of([
     },
 ]);
 
-const captureViewExtension = EditorView.updateListener.of((update) => {
-    editorView = update.view;
-});
 
 export const quickEdit = (fileName: string) => [
     quickEditState,
     quickEditTooltipField,
     quickEditKeymap,
-    captureViewExtension,
 ];

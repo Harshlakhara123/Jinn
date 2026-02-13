@@ -2,8 +2,6 @@ import { EditorState, StateField } from "@codemirror/state";
 import { showTooltip, Tooltip, EditorView } from "@codemirror/view";
 import { quickEditState, showQuickEditEffect } from "./quick-edit";
 
-let editorView: EditorView | null = null;
-
 const createTooltipForSelection = (state: EditorState): readonly Tooltip[] => {
     const selection = state.selection.main;
 
@@ -18,7 +16,7 @@ const createTooltipForSelection = (state: EditorState): readonly Tooltip[] => {
             pos: selection.to,
             above: false,
             strictSide: false,
-            create() {
+            create(view: EditorView) {
                 const dom = document.createElement("div");
                 dom.className =
                     "bg-popover text-popover-foreground z-50 rounded-sm border border-input p-1 shadow-md flex items-center gap-2 text-sm";
@@ -45,12 +43,12 @@ const createTooltipForSelection = (state: EditorState): readonly Tooltip[] => {
                 quickEditButton.appendChild(quickEditButtonShortcut);
 
                 // Quick Edit button logic
-                quickEditButton.onclick = () => {
-                    if (editorView) {
-                        editorView.dispatch({
-                            effects: showQuickEditEffect.of(true),
-                        });
-                    }
+                quickEditButton.onclick = (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    view.dispatch({
+                        effects: showQuickEditEffect.of(true),
+                    });
                 };
 
                 dom.appendChild(addToChatButton);
@@ -85,13 +83,7 @@ const selectionTooltipField = StateField.define<readonly Tooltip[]>({
         showTooltip.computeN([field], (state) => state.field(field)),
 });
 
-// Capture view reference
-const captureViewExtension = EditorView.updateListener.of((update) => {
-    editorView = update.view;
-});
-
 // Exported extension
 export const selectionTooltip = () => [
     selectionTooltipField,
-    captureViewExtension,
 ];
