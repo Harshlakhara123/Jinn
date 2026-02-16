@@ -31,7 +31,7 @@ export default defineSchema({
         name: v.string(),
         type: v.union(v.literal("file"), v.literal("folder")),
         content: v.optional(v.string()),
-        storageId: v.optional(v.id("storage")),
+        storageId: v.optional(v.id("_storage")),
         updatedAt: v.number(),
     })
 
