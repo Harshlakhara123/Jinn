@@ -1,4 +1,4 @@
-import { defineSchema , defineTable }  from "convex/server";
+import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
 
 export default defineSchema({
@@ -22,6 +22,12 @@ export default defineSchema({
             )
         ),
         exportRepoUrl: v.optional(v.string()),
+        settings: v.optional(
+            v.object({
+                installCommand: v.optional(v.string()),
+                devCommand: v.optional(v.string()),
+            })
+        ),
     }).index("byOwner", ["ownerId"]),
 
 
@@ -35,9 +41,9 @@ export default defineSchema({
         updatedAt: v.number(),
     })
 
-    .index("by_project", ["projectId"])
-    .index("by_parent", ["parentId"])
-    .index("by_project_parent", ["projectId", "parentId"]),
+        .index("by_project", ["projectId"])
+        .index("by_parent", ["parentId"])
+        .index("by_project_parent", ["projectId", "parentId"]),
 
     conversations: defineTable({
         projectId: v.id("projects"),
@@ -58,6 +64,6 @@ export default defineSchema({
             )
         ),
     })
-    .index("by_conversation", ["conversationId"])
-    .index("by_project_status", ["projectId", "status"]),
+        .index("by_conversation", ["conversationId"])
+        .index("by_project_status", ["projectId", "status"]),
 })
