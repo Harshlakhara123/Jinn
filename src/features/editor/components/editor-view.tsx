@@ -6,12 +6,13 @@ import { TopNavigation } from "./top-navigation";
 import { CodeEditor } from "./code-editor";
 import Image from "next/image";
 import { useEffect, useRef } from "react";
+import {AlertTriangleIcon} from "lucide-react";
 
 const DEBOUNCE_MS = 1500;
 
-export const EditorView = ({projectId} : {projectId: Id<"projects">}) => {
+export const EditorView = ({ projectId }: { projectId: Id<"projects"> }) => {
 
-    const { activeTabId} = useEditor(projectId);
+    const { activeTabId } = useEditor(projectId);
     const activeFile = useFile(activeTabId);
     const updateFile = useUpdateFile();
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -21,7 +22,7 @@ export const EditorView = ({projectId} : {projectId: Id<"projects">}) => {
 
     useEffect(() => {
         return () => {
-            if(timeoutRef.current){
+            if (timeoutRef.current) {
                 clearTimeout(timeoutRef.current);
             }
         };
@@ -29,38 +30,45 @@ export const EditorView = ({projectId} : {projectId: Id<"projects">}) => {
     return (
         <div className="h-full flex flex-col">
             <div className="flex items-center">
-                <TopNavigation projectId={projectId}/>
+                <TopNavigation projectId={projectId} />
             </div>
             {activeTabId && <FileBreadcrumbs projectId={projectId} />}
             <div className="flex-1 min-h-0 bg-bbackground">
                 {!activeFile && (
                     <div className="size-full flex items-center justify-center">
                         <Image
-                        src="/jinn-icon.svg"
-                        alt="Jinn"
-                        width={50}
-                        height={50}
-                        className="opacity-25"
+                            src="/jinn-icon.svg"
+                            alt="Jinn"
+                            width={50}
+                            height={50}
+                            className="opacity-25"
                         />
                     </div>
                 )}
                 {isActiveFileText && (
                     <CodeEditor
-                    key={activeFile._id}
-                    fileName={activeFile.name}
-                    initialValue={activeFile.content}
-                    onChange={(content: string) => {
-                        if(timeoutRef.current){
-                            clearTimeout(timeoutRef.current);
-                        }
-                        timeoutRef.current = setTimeout(() => {
-                            updateFile({ id: activeFile._id, content});
-                        }, DEBOUNCE_MS)
-                    }}
-                     />
+                        key={activeFile._id}
+                        fileName={activeFile.name}
+                        initialValue={activeFile.content}
+                        onChange={(content: string) => {
+                            if (timeoutRef.current) {
+                                clearTimeout(timeoutRef.current);
+                            }
+                            timeoutRef.current = setTimeout(() => {
+                                updateFile({ id: activeFile._id, content });
+                            }, DEBOUNCE_MS)
+                        }}
+                    />
                 )}
                 {isActiveFileBinary && (
-                    <p>TODO: implement binary preview</p>
+                    <div className="size-full flex items-center justify-center">
+                        <div className="flex flex-col items-center gap-2.5 max-w-md text-center">
+                            <AlertTriangleIcon className="size-10 text-yellow-500" />
+                            <p className="text-sm">
+                                The file is not displayed in the text editor because it is either binary or uses an unsupported text encoding.
+                            </p>
+                        </div>
+                    </div>
                 )}
             </div>
         </div>
