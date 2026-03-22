@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 
 import { Poppins } from "next/font/google";
 import { cn } from "@/lib/utils";
@@ -69,9 +71,11 @@ export const ProjectsView = () => {
         <div className="w-full max-w-sm mx-auto flex flex-col gap-4 items-center">
           <div className="flex justify-between gap-4 w-full items-center">
             <div className="flex items-center gap-2 w-full group/logo">
-              <img
+              <Image
                 src="/jinn-icon.svg"
                 alt="Jinn"
+                width={44}
+                height={44}
                 className="w-6 h-6 md:w-11 md:h-11"
               />
               <h1

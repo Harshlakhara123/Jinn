@@ -9,11 +9,9 @@ import { XIcon } from "lucide-react";
 
 const Tab = ({
     fileId,
-    isFirst,
     projectId,
 }:{
     fileId: Id<"files">;
-    isFirst: boolean;
     projectId: Id<"projects">;
 }) => {
     const file = useFile(fileId);
@@ -83,11 +81,10 @@ export const TopNavigation = ({
     return (
         <ScrollArea className="flex-1">
             <nav className="bg-sidebar flex items-center h-8.75 border-b">
-                {openTabs.map((fileId,index) => (
+                {openTabs.map((fileId) => (
                     <Tab
                     key={fileId}
                     fileId={fileId}
-                    isFirst={index===0}
                     projectId={projectId}
                     />
                 ))}

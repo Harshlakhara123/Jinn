@@ -254,15 +254,19 @@ export const Persona: FC<PersonaProps> = memo(
 
     useEffect(() => {
       if (listeningInput) {
+        // eslint-disable-next-line
         listeningInput.value = state === "listening";
       }
       if (thinkingInput) {
+        // eslint-disable-next-line
         thinkingInput.value = state === "thinking";
       }
       if (speakingInput) {
+        // eslint-disable-next-line
         speakingInput.value = state === "speaking";
       }
       if (asleepInput) {
+        // eslint-disable-next-line
         asleepInput.value = state === "asleep";
       }
     }, [state, listeningInput, thinkingInput, speakingInput, asleepInput]);

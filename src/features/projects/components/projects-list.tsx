@@ -6,7 +6,6 @@ import { AlertCircleIcon, ArrowRightIcon,GlobeIcon, Loader2Icon} from "lucide-re
 import {formatDistanceToNow} from "date-fns";
 import Link from "next/link";
 import { FaGithub } from "react-icons/fa";
-import { get } from "http";
 import { Button } from "@/components/ui/button";
 
 const formatTimestamp = (timestamp: number) => {

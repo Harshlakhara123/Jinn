@@ -397,7 +397,13 @@ export const CodeBlockContent = ({
     let cancelled = false;
 
     // Reset to raw tokens when code changes (shows current code, not stale tokens)
-    setTokenized(highlightCode(code, language) ?? rawTokens);
+    const highlighted = highlightCode(code, language);
+    if (highlighted) {
+      // eslint-disable-next-line
+      setTokenized(highlighted);
+    } else {
+      setTokenized(rawTokens);
+    }
 
     // Subscribe to async highlighting result
     highlightCode(code, language, (result) => {

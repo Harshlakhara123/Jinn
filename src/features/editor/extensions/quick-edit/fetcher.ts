@@ -42,14 +42,14 @@ export const fetcher = async (
         }
 
         // Try to get more details if the error is an HTTP error
-        if (error instanceof Error && (error as any).response) {
+        if (error instanceof Error && "response" in error) {
             try {
-                const errorData = await (error as any).response.json();
-                if (errorData && errorData.details) {
-                    toast.error(`Suggestion Failed: ${errorData.details}`);
+                const errorData = await (error as { response: Response }).response.json();
+                if (errorData && typeof errorData === 'object' && 'details' in errorData) {
+                    toast.error(`Suggestion Failed: ${errorData.details as string}`);
                     return null;
                 }
-            } catch (e) {
+            } catch {
                 // ignore json parse error
             }
         }

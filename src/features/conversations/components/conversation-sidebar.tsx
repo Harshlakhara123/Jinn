@@ -125,11 +125,11 @@ export const ConversationSidebar = ({
     } catch (error) {
       if (error instanceof Error && error.name === 'HTTPError') {
         try {
-          // @ts-ignore
+          // @ts-expect-error: error is HTTPError from ky, response property exists
           const errorJson = await error.response.json();
           toast.error(errorJson.error || "Message failed to send");
           console.error("Message send failed:", errorJson);
-        } catch (e) {
+        } catch {
           toast.error("Message failed to send");
           console.error("Message send failed (could not parse error):", error);
         }

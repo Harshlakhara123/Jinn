@@ -36,7 +36,7 @@ export const CodeEditor = ({fileName, initialValue = "", onChange}: Props) => {
         customTheme,
         languageExtension,
         suggestion(fileName),
-        quickEdit(fileName),
+        quickEdit(),
         selectionTooltip(),
         keymap.of([indentWithTab]),
         minimap(),

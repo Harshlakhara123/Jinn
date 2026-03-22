@@ -164,7 +164,9 @@ export const InlineCitationCarouselIndex = ({
       return;
     }
 
+    // eslint-disable-next-line
     setCount(api.scrollSnapList().length);
+    // eslint-disable-next-line
     setCurrent(api.selectedScrollSnap() + 1);
 
     const handleSelect = () => {
