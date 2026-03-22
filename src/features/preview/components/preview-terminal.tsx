@@ -53,7 +53,7 @@ export const PreviewTerminal = ({ output }: PreviewTerminalProps) => {
       fitAddonRef.current = null;
     };
     // "output" does not need to be a dependency since it is not intended
-    // to update anything, just used on mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Write output

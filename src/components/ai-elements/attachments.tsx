@@ -90,8 +90,9 @@ const renderAttachmentImage = (
   url: string,
   filename: string | undefined,
   isGrid: boolean
-) =>
-  isGrid ? (
+) => {
+  /* eslint-disable-next-line @next/next/no-img-element */
+  return isGrid ? (
     <img
       alt={filename || "Image"}
       className="size-full object-cover"
@@ -108,6 +109,7 @@ const renderAttachmentImage = (
       width={20}
     />
   );
+};
 
 // ============================================================================
 // Contexts

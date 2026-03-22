@@ -4,7 +4,6 @@ import { ChevronRightIcon, CopyMinusIcon, FilePlusCornerIcon,FolderPlusIcon } fr
 import { useState } from "react";
 import { Id } from "../../../../../convex/_generated/dataModel";
 import { Button } from "@/components/ui/button";
-import { set } from "date-fns";
 import { useProject } from "../../hooks/use-projects";
 import { useCreateFile, useCreateFolder, useFolderContents } from "../../hooks/use-files";
 import { CreateInput } from "./create-input";

@@ -1,6 +1,5 @@
-import {ChevronRight, ChevronRightIcon} from "lucide-react";
+import {ChevronRightIcon} from "lucide-react";
 import {FileIcon , FolderIcon } from "@react-symbols/icons/utils";
-import { on } from "events";
 import { useState } from "react";
 import { getItemPadding } from "./constants";
 import { cn } from "@/lib/utils";

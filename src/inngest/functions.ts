@@ -2,7 +2,6 @@ import { firecrawl } from "@/lib/firecrawl";
 import { inngest } from "./client";
 import { google } from "@ai-sdk/google";
 import { generateText } from "ai";
-import { step } from "inngest";
 
 const URL_Legex = /https?:\/\/[^\s]+/g;
 

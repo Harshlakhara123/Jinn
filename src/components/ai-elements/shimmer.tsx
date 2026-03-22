@@ -39,9 +39,9 @@ const ShimmerComponent = ({
   duration = 2,
   spread = 2,
 }: TextShimmerProps) => {
-  const MotionComponent = getMotionComponent(
+  const MotionComponent = useMemo(() => getMotionComponent(
     Component as keyof JSX.IntrinsicElements
-  );
+  ), [Component]);
 
   const dynamicSpread = useMemo(
     () => (children?.length ?? 0) * spread,
@@ -49,6 +49,7 @@ const ShimmerComponent = ({
   );
 
   return (
+    // eslint-disable-next-line
     <MotionComponent
       animate={{ backgroundPosition: "0% center" }}
       className={cn(

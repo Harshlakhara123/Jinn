@@ -6,10 +6,9 @@ import {
     ViewUpdate,
     WidgetType,
     keymap,
-    lineNumbers,
 } from "@codemirror/view";
 
-import { EditorState, StateEffect, StateEffectType, StateField, Transaction } from "@codemirror/state";
+import { StateEffect, StateEffectType, StateField } from "@codemirror/state";
 import { fetcher } from "./fetcher";
 
 
@@ -148,7 +147,7 @@ const renderPlugin = ViewPlugin.fromClass(
         }
         update(update: ViewUpdate) {
             const suggestionChanged = update.transactions.some((Transaction) => {
-                return Transaction.effects.some((effect: { is: (arg0: StateEffectType<string | null>) => any; }) => {
+                return Transaction.effects.some((effect: { is: (arg0: StateEffectType<string | null>) => boolean; }) => {
                     return effect.is(setSuggestionEffect)
                 });
             });

@@ -1,13 +1,7 @@
 import {
-    Decoration,
-    DecorationSet,
     EditorView,
     Tooltip,
-    ViewPlugin,
-    ViewUpdate,
-    WidgetType,
     keymap,
-    lineNumbers,
     showTooltip,
 } from "@codemirror/view";
 
@@ -198,7 +192,7 @@ const quickEditKeymap = keymap.of([
 ]);
 
 
-export const quickEdit = (fileName: string) => [
+export const quickEdit = () => [
     quickEditState,
     quickEditTooltipField,
     quickEditKeymap,

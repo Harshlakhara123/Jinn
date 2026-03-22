@@ -74,7 +74,7 @@ export async function POST(request: Request) {
 
     // Call AI model
     const result = await generateText({
-      model: google("gemini-2.5-flash-lite"),
+      model: google("gemini-2.5-flash"),
       prompt,
     });
 
